@@ -68,4 +68,4 @@ namespace avxhole::util {
 	}
 }
 
-#endif // !AVXHOLE_UTIL_HXX
+#endif	// !AVXHOLE_UTIL_HXX
