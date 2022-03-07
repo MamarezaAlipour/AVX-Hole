@@ -1,8 +1,8 @@
 // Copyright (c) 2022 Parisa Khaleghi
 // All rights reserved
 
-#ifndef NOLA_SIMD_TEST_AVX2_FLOAT_HXX
-#define NOLA_SIMD_TEST_AVX2_FLOAT_HXX
+#ifndef AVXHOLE_SIMD_TEST_AVX2_FLOAT_HXX
+#define AVXHOLE_SIMD_TEST_AVX2_FLOAT_HXX
 
 
 int test_avx2_float();
