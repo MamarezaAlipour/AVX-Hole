@@ -7,7 +7,6 @@
 #include "test_helpers.hxx"
 #include "test_avx512_double.hxx"
 
-
 int test_avx512_double() {
 	std::cout << "\ntest_avx512_double()" << std::endl;
 
