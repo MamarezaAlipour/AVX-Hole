@@ -254,3 +254,22 @@ int test_avx512_float_fma() {
 	else
 		return 0;
 }
+
+int test_avx512_float_reduce() {
+	std::vector<float> a{ 1.1, 4.9, 2.3, 3.5, 5.7, 2.8, 0.6, 8.0,
+		6.2, 2.5, 4.3, 0.7, 4.8, 3.0, 1.8, 2.1 };
+	float soln{ 54.3 };
+
+	auto va = avxhole::simd::avx512_load(a.data());
+
+	float r = avxhole::simd::avx512_reduce(va);
+
+	if (r != soln) {
+		std::cout << "\nERROR! test_avx512_float_reduce()"
+				  << "\nr    = " << r
+				  << "\nsoln = " << soln << std::endl;
+		return 1;
+	}
+	else
+		return 0;
+}
