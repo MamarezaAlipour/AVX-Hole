@@ -202,3 +202,55 @@ int test_avx512_float_mul() {
 	else
 		return 0;
 }
+
+int test_avx512_float_div() {
+	std::vector<float> a(16, 5.5);
+	std::vector<float> b(16, 2.2);
+	std::vector<float> c(16);
+	std::vector<float> soln(16, 2.5);
+
+	auto va = avxhole::simd::avx512_load(a.data());
+	auto vb = avxhole::simd::avx512_load(b.data());
+
+	auto vc = avxhole::simd::avx512_div(va, vb);
+
+	avxhole::simd::avx512_store(c.data(), vc);
+
+	bool r = compare_sequences(c.begin(), c.end(), soln.begin());
+
+	if (r == true) {
+		std::cout << "\nERROR! test_avx512_float_div()" << std::endl;
+		print_sequence("c", c.begin(), c.end());
+		print_sequence("soln", soln.begin(), soln.end());
+		return 1;
+	}
+	else
+		return 0;
+}
+
+int test_avx512_float_fma() {
+	std::vector<float> a(16, 5.5);
+	std::vector<float> b(16, 2.2);
+	std::vector<float> c(16, 1.1);
+	std::vector<float> d(16);
+	std::vector<float> soln(16, 13.2);
+
+	auto va = avxhole::simd::avx512_load(a.data());
+	auto vb = avxhole::simd::avx512_load(b.data());
+	auto vc = avxhole::simd::avx512_load(c.data());
+
+	auto vd = avxhole::simd::avx512_fma(va, vb, vc);
+
+	avxhole::simd::avx512_store(d.data(), vd);
+
+	bool r = compare_sequences(d.begin(), d.end(), soln.begin());
+
+	if (r == true) {
+		std::cout << "\nERROR! test_avx512_float_fma()" << std::endl;
+		print_sequence("d", d.begin(), d.end());
+		print_sequence("soln", soln.begin(), soln.end());
+		return 1;
+	}
+	else
+		return 0;
+}
