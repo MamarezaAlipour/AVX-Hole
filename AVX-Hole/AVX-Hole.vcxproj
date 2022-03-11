@@ -147,12 +147,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\avxhole\internal\avx512.hxx" />
+    <ClCompile Include="tests\Makefile" />
     <ClCompile Include="tests\test_avx2_double.cxx" />
     <ClCompile Include="tests\test_avx2_float.cxx" />
     <ClCompile Include="tests\test_avx512_double.cxx" />
     <ClCompile Include="tests\test_avx512_float.cxx" />
     <ClCompile Include="tests\test_concepts.cxx" />
-    <ClCompile Include="tests\test_traits.cpp" />
+    <ClCompile Include="tests\test_main.cxx" />
+    <ClCompile Include="tests\test_traits.cxx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tests\test_avx512_float.hxx" />

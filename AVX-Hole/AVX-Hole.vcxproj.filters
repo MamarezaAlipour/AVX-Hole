@@ -24,7 +24,7 @@
     <ClCompile Include="tests\test_concepts.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tests\test_traits.cpp">
+    <ClCompile Include="tests\test_traits.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tests\test_avx2_float.cxx">
@@ -34,6 +34,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tests\test_avx512_float.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\test_main.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\Makefile">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
