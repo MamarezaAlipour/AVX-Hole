@@ -65,3 +65,44 @@ int test_avx512_float_set_zero_and_store() {
 	else
 		return 0;
 }
+
+int test_avx512_float_set_scalar() {
+	std::vector<float> a(16);
+	std::vector<float> soln(16, 5.5);
+
+	auto va = avxhole::simd::avx512_set_scalar(5.5f);
+
+	avxhole::simd::avx512_store(a.data(), va);
+
+	bool r = compare_sequences(a.begin(), a.end(), soln.begin());
+
+	if (r == true) {
+		std::cout << "\nERROR! test_avx512_float_set_scalar()" << std::endl;
+		print_sequence("a", a.begin(), a.end());
+		print_sequence("soln", soln.begin(), soln.end());
+		return 1;
+	}
+	else
+		return 0;
+}
+
+int test_avx512_float_broadcast() {
+	std::vector<float> a(16);
+	std::vector<float> soln(16, 5.5);
+	float s{ 5.5 };
+
+	auto va = avxhole::simd::avx512_broadcast(&s);
+
+	avxhole::simd::avx512_store(a.data(), va);
+
+	bool r = compare_sequences(a.begin(), a.end(), soln.begin());
+
+	if (r == true) {
+		std::cout << "\nERROR! test_avx512_float_broadcast()" << std::endl;
+		print_sequence("a", a.begin(), a.end());
+		print_sequence("soln", soln.begin(), soln.end());
+		return 1;
+	}
+	else
+		return 0;
+}
