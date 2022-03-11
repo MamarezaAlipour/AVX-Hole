@@ -178,3 +178,27 @@ int test_avx512_float_sub() {
 		return 0;
 }
 
+int test_avx512_float_mul() {
+	std::vector<float> a(16, 5.5);
+	std::vector<float> b(16, 2.2);
+	std::vector<float> c(16);
+	std::vector<float> soln(16, 12.1);
+
+	auto va = avxhole::simd::avx512_load(a.data());
+	auto vb = avxhole::simd::avx512_load(b.data());
+
+	auto vc = avxhole::simd::avx512_mul(va, vb);
+
+	avxhole::simd::avx512_store(c.data(), vc);
+
+	bool r = compare_sequences(c.begin(), c.end(), soln.begin());
+
+	if (r == true) {
+		std::cout << "\nERROR! test_avx512_float_mul()" << std::endl;
+		print_sequence("c", c.begin(), c.end());
+		print_sequence("soln", soln.begin(), soln.end());
+		return 1;
+	}
+	else
+		return 0;
+}
