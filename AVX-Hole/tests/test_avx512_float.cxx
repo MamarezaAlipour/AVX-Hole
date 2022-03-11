@@ -106,3 +106,25 @@ int test_avx512_float_broadcast() {
 	else
 		return 0;
 }
+
+int test_avx512_float_load() {
+	std::vector<float> a(16, 5.5);
+	std::vector<float> b(16);
+	std::vector<float> soln(16, 5.5);
+
+	auto va = avxhole::simd::avx512_load(a.data());
+
+	avxhole::simd::avx512_store(b.data(), va);
+
+	bool r = compare_sequences(b.begin(), b.end(), soln.begin());
+
+	if (r == true) {
+		std::cout << "\nERROR! test_avx512_float_load()" << std::endl;
+		print_sequence("b", b.begin(), b.end());
+		print_sequence("soln", soln.begin(), soln.end());
+		return 1;
+	}
+	else
+		return 0;
+}
+
