@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="examples\avx2\avx2_double_add.cxx" />
     <ClCompile Include="include\avxhole\internal\avx512.hxx" />
     <ClCompile Include="tests\Makefile" />
     <ClCompile Include="tests\test_avx2_double.cxx" />
