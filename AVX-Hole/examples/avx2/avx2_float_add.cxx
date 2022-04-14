@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <vector>
-#include <nola/simd.hxx>
-#include <nola/util.hxx>
+#include <avxhole/simd.hxx>
+#include <avxhole/util.hxx>
 
 
 int main() {
@@ -18,17 +18,17 @@ int main() {
 	std::vector<float> c(8);
 
 	// Define SIMD objects using input data
-	auto va = nola::simd::avx2_load(a.data());
-	auto vb = nola::simd::avx2_load(b.data());
+	auto va = avxhole::simd::avx2_load(a.data());
+	auto vb = avxhole::simd::avx2_load(b.data());
 
 	// Compute SIMD operation c = a + b
-	auto cv = nola::simd::avx2_add(va, vb);
+	auto cv = avxhole::simd::avx2_add(va, vb);
 
 	// Transfer data from SIMD object to container
-	nola::simd::avx2_store(c.data(), cv);
+	avxhole::simd::avx2_store(c.data(), cv);
 
 	// Display result
-	nola::util::print_vector("\nc", c.size(), c.data(), 2, 3);
+	avxhole::util::print_vector("\nc", c.size(), c.data(), 2, 3);
 
 	// c = [
 	//  7.7 7.7 7.7 7.7 7.7 7.7 7.7 7.7
