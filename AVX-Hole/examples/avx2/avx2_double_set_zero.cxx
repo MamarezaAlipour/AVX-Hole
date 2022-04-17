@@ -1,10 +1,10 @@
 // Copyright (c) 2022 Parisa Khaleghi
 // All rights reserved
 
-#include <iostream>
-#include <vector>
 #include <avxhole/simd.hxx>
 #include <avxhole/util.hxx>
+#include <iostream>
+#include <vector>
 
 int main() {
 	std::cout << "\nSIMD AVX2 Double Set Zero Example." << std::endl;

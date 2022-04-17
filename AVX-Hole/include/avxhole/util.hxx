@@ -5,36 +5,38 @@
 #define AVXHOLE_UTIL_HXX
 
 #include <algorithm>
+#include <avxhole/internal/concepts.hxx>
 #include <cmath>
 #include <cstdint>
 #include <iomanip>
 #include <iostream>
 #include <string_view>
-#include <avxhole/internal/concepts.hxx>
 
 namespace avxhole::util {
 	template <Real R>
 	inline void print_vector(std::string_view s, std::int32_t size, R const a[]);
 
 	template <Real R>
-	inline void print_vector(std::string_view s, std::int32_t size, R const a[], std::int32_t precision, std::int32_t width);
+	inline void print_vector(std::string_view s, std::int32_t size, R const a[],
+							 std::int32_t precision, std::int32_t width);
 
 	template <Real R>
 	inline void print_matrix(std::string_view s, std::int32_t rows, std::int32_t cols, R const a[]);
 
 	template <Real R>
-	inline void print_matrix(std::string_view s, std::int32_t rows, std::int32_t cols, R const a[], std::int32_t precision, std::int32_t width);
+	inline void print_matrix(std::string_view s, std::int32_t rows, std::int32_t cols, R const a[],
+							 std::int32_t precision, std::int32_t width);
 
 	// Defintions
 	// Print Vector
 	// Display all elements of a one-dimensional container
 	template <Real R>
-	void print_vector(std::string_view s, std::int32_t size, R const a[], std::int32_t precision, std::int32_t width) {
+	void print_vector(std::string_view s, std::int32_t size, R const a[], std::int32_t precision,
+					  std::int32_t width) {
 		std::cout << s << " = [" << std::endl;
 
-		for (std::int32_t i{ 0 }; i < size; ++i)
-			std::cout << " " << std::setprecision(precision)
-					  << std::setw(width) << a[i];
+		for (std::int32_t i {0}; i < size; ++i)
+			std::cout << " " << std::setprecision(precision) << std::setw(width) << a[i];
 
 		std::cout << "\n]" << std::endl;
 	}
@@ -47,13 +49,14 @@ namespace avxhole::util {
 	// Print Matrix
 	// Display all elements of a two-dimensional container
 	template <Real R>
-	void print_matrix(std::string_view s, std::int32_t rows, std::int32_t cols, R const a[], std::int32_t precision, std::int32_t width) {
+	void print_matrix(std::string_view s, std::int32_t rows, std::int32_t cols, R const a[],
+					  std::int32_t precision, std::int32_t width) {
 		std::cout << s << " = [" << std::endl;
 
 		for (std::int32_t i = 0; i < rows; ++i) {
 			for (std::int32_t j = 0; j < cols; ++j) {
-				std::cout << " " << std::setprecision(precision)
-						  << std::setw(width) << a[j * rows + i];
+				std::cout << " " << std::setprecision(precision) << std::setw(width)
+						  << a[j * rows + i];
 			}
 
 			std::cout << std::endl;
@@ -66,6 +69,6 @@ namespace avxhole::util {
 	void print_matrix(std::string_view s, std::int32_t rows, std::int32_t cols, R const a[]) {
 		return print_matrix(s, rows, cols, a, 6, 8);
 	}
-}
+} // namespace avxhole::util
 
-#endif	// !AVXHOLE_UTIL_HXX
+#endif // !AVXHOLE_UTIL_HXX

@@ -4,9 +4,9 @@
 #ifndef AVXHOLE_AVX2_HXX
 #define AVXHOLE_AVX2_HXX
 
+#include <avxhole/internal/concepts.hxx>
 #include <cstdint>
 #include <immintrin.h>
-#include <avxhole/internal/concepts.hxx>
 
 namespace avxhole::simd {
 	// Type aliases
@@ -50,24 +50,27 @@ namespace avxhole::simd {
 	inline float avx2_reduce(v256f a);
 	inline double avx2_reduce(v256d a);
 
-
 	// Helper classes
 	// Specializations for avx2_width
 
 	template <Integer I>
 	struct avx2_width<I, float> {
 		using value_type = I;
-		static constexpr value_type value{ 8 };
+		static constexpr value_type value {8};
 
-		constexpr operator value_type() const noexcept { return value; }
+		constexpr operator value_type() const noexcept {
+			return value;
+		}
 	};
 
 	template <Integer I>
 	struct avx2_width<I, double> {
 		using value_type = I;
-		static constexpr value_type value{ 4 };
+		static constexpr value_type value {4};
 
-		constexpr operator value_type() const noexcept { return value; }
+		constexpr operator value_type() const noexcept {
+			return value;
+		}
 	};
 
 	// Helper class for avx2_set_zero
@@ -79,44 +82,86 @@ namespace avxhole::simd {
 
 		template <>
 		struct simd_mm256_setzero<float> {
-			static auto mm256_setzero() { return _mm256_setzero_ps(); };
+			static auto mm256_setzero() {
+				return _mm256_setzero_ps();
+			};
 		};
 
 		template <>
 		struct simd_mm256_setzero<double> {
-			static auto mm256_setzero() { return _mm256_setzero_pd(); }
+			static auto mm256_setzero() {
+				return _mm256_setzero_pd();
+			}
 		};
-	}
+	} // namespace detail
 
 	template <Real R>
-	inline auto avx2_set_zero() { return detail::simd_mm256_setzero<R>::mm256_setzero(); }
+	inline auto avx2_set_zero() {
+		return detail::simd_mm256_setzero<R>::mm256_setzero();
+	}
 
-	inline v256f avx2_set_scalar(float a) { return _mm256_set1_ps(a); }
-	inline v256d avx2_set_scalar(double a) { return _mm256_set1_pd(a); }
+	inline v256f avx2_set_scalar(float a) {
+		return _mm256_set1_ps(a);
+	}
+	inline v256d avx2_set_scalar(double a) {
+		return _mm256_set1_pd(a);
+	}
 
-	inline v256f avx2_broadcast(float const* addr) { return _mm256_broadcast_ss(addr); }
-	inline v256d avx2_broadcast(double const* addr) { return _mm256_broadcast_sd(addr); }
+	inline v256f avx2_broadcast(float const* addr) {
+		return _mm256_broadcast_ss(addr);
+	}
+	inline v256d avx2_broadcast(double const* addr) {
+		return _mm256_broadcast_sd(addr);
+	}
 
-	inline v256f avx2_load(float const* addr) { return _mm256_loadu_ps(addr); }
-	inline v256d avx2_load(double const* addr) { return _mm256_loadu_pd(addr); }
+	inline v256f avx2_load(float const* addr) {
+		return _mm256_loadu_ps(addr);
+	}
+	inline v256d avx2_load(double const* addr) {
+		return _mm256_loadu_pd(addr);
+	}
 
-	inline void avx2_store(float* addr, v256f a) { _mm256_storeu_ps(addr, a); }
-	inline void avx2_store(double* addr, v256d a) { _mm256_storeu_pd(addr, a); }
+	inline void avx2_store(float* addr, v256f a) {
+		_mm256_storeu_ps(addr, a);
+	}
+	inline void avx2_store(double* addr, v256d a) {
+		_mm256_storeu_pd(addr, a);
+	}
 
-	inline v256f avx2_add(v256f a, v256f b) { return _mm256_add_ps(a, b); }
-	inline v256d avx2_add(v256d a, v256d b) { return _mm256_add_pd(a, b); }
+	inline v256f avx2_add(v256f a, v256f b) {
+		return _mm256_add_ps(a, b);
+	}
+	inline v256d avx2_add(v256d a, v256d b) {
+		return _mm256_add_pd(a, b);
+	}
 
-	inline v256f avx2_sub(v256f a, v256f b) { return _mm256_sub_ps(a, b); }
-	inline v256d avx2_sub(v256d a, v256d b) { return _mm256_sub_pd(a, b); }
+	inline v256f avx2_sub(v256f a, v256f b) {
+		return _mm256_sub_ps(a, b);
+	}
+	inline v256d avx2_sub(v256d a, v256d b) {
+		return _mm256_sub_pd(a, b);
+	}
 
-	inline v256f avx2_mul(v256f a, v256f b) { return _mm256_mul_ps(a, b); }
-	inline v256d avx2_mul(v256d a, v256d b) { return _mm256_mul_pd(a, b); }
+	inline v256f avx2_mul(v256f a, v256f b) {
+		return _mm256_mul_ps(a, b);
+	}
+	inline v256d avx2_mul(v256d a, v256d b) {
+		return _mm256_mul_pd(a, b);
+	}
 
-	inline v256f avx2_div(v256f a, v256f b) { return _mm256_div_ps(a, b); }
-	inline v256d avx2_div(v256d a, v256d b) { return _mm256_div_pd(a, b); }
+	inline v256f avx2_div(v256f a, v256f b) {
+		return _mm256_div_ps(a, b);
+	}
+	inline v256d avx2_div(v256d a, v256d b) {
+		return _mm256_div_pd(a, b);
+	}
 
-	inline v256f avx2_fma(v256f a, v256f b, v256f c) { return _mm256_fmadd_ps(a, b, c); }
-	inline v256d avx2_fma(v256d a, v256d b, v256d c) { return _mm256_fmadd_pd(a, b, c); }
+	inline v256f avx2_fma(v256f a, v256f b, v256f c) {
+		return _mm256_fmadd_ps(a, b, c);
+	}
+	inline v256d avx2_fma(v256d a, v256d b, v256d c) {
+		return _mm256_fmadd_pd(a, b, c);
+	}
 
 	inline float avx2_reduce(v256f a) {
 		__m128 high128 = _mm256_extractf128_ps(a, 1);
@@ -144,6 +189,6 @@ namespace avxhole::simd {
 
 		return _mm_cvtsd_f64(low64);
 	}
-}
+} // namespace avxhole::simd
 
 #endif // !AVXHOLE_AVX2_HXX

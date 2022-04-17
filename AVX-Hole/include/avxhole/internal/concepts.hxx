@@ -14,6 +14,6 @@ namespace avxhole {
 	// concept Real
 	template <class T>
 	concept Real = avxhole::is_real_v<T>;
-}
+} // namespace avxhole
 
 #endif // !AVXHOLE_CONCEPTS_HXX

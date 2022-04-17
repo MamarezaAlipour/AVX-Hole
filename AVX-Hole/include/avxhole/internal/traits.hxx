@@ -37,7 +37,7 @@ namespace avxhole {
 		struct is_integer_impl<long long> : public std::true_type {};
 		template <>
 		struct is_integer_impl<unsigned long long> : public std::true_type {};
-	}
+	} // namespace detail
 
 	template <class T>
 	struct is_integer : public detail::is_integer_impl<std::remove_cvref_t<T>> {};
@@ -49,10 +49,10 @@ namespace avxhole {
 		struct is_real_impl<float> : public std::true_type {};
 		template <>
 		struct is_real_impl<double> : public std::true_type {};
-	}
+	} // namespace detail
 
 	template <class T>
 	struct is_real : public detail::is_real_impl<std::remove_cvref_t<T>> {};
-}
+} // namespace avxhole
 
 #endif // !AVXHOLE_TRAITS_HXX
