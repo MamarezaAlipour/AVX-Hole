@@ -4,9 +4,9 @@
 #ifndef AVXHOLE_TEST_HELPERS_HXX
 #define AVXHOLE_TEST_HELPERS_HXX
 
+#include <iostream>
 #include <string_view>
 #include <type_traits>
-#include <iostream>
 
 //
 // Helper functions used throughout
@@ -18,7 +18,7 @@ bool compare_sequences(I first1, I last1, I first2) {
 	T eps = std::numeric_limits<T>::epsilon();
 	T tol = eps * 10;
 
-	bool flag{ false };	 // chosen to be equivalent to int{0}
+	bool flag {false}; // chosen to be equivalent to int{0}
 
 	for (; first1 != last1; ++first1, ++first2) {
 		T diff = (*first1) - (*first2);
@@ -30,8 +30,6 @@ bool compare_sequences(I first1, I last1, I first2) {
 	return flag;
 }
 
-
-
 template <typename I>
 void print_sequence(std::string_view str, I first, I last) {
 	std::cout << str << ":" << std::endl;
@@ -41,6 +39,5 @@ void print_sequence(std::string_view str, I first, I last) {
 
 	std::cout << std::endl;
 }
-
 
 #endif

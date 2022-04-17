@@ -1,16 +1,16 @@
 // Copyright (c) 2022 Parisa Khaleghi
 // All rights reserved
 
+#include "test_avx512_float.hxx"
+#include "test_helpers.hxx"
+#include <avxhole/simd.hxx>
 #include <iostream>
 #include <vector>
-#include <avxhole/simd.hxx>
-#include "test_helpers.hxx"
-#include "test_avx512_float.hxx"
 
 int test_avx512_float() {
 	std::cout << "\ntest_avx512_float()" << std::endl;
 
-	int fail{ 0 };
+	int fail {0};
 
 	fail += test_avx512_float_width();
 	fail += test_avx512_float_set_zero_and_store();
@@ -34,15 +34,13 @@ int test_avx512_float() {
 
 int test_avx512_float_width() {
 	constexpr std::int32_t r = avxhole::simd::avx512_width<std::int32_t, float>();
-	std::int32_t soln{ 16 };
+	std::int32_t soln {16};
 
 	if (r != soln) {
 		std::cout << "\nERROR! test_avx512_float_width()"
-				  << "\nr    = " << r
-				  << "\nsoln = " << soln << std::endl;
+				  << "\nr    = " << r << "\nsoln = " << soln << std::endl;
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
 
@@ -61,8 +59,7 @@ int test_avx512_float_set_zero_and_store() {
 		print_sequence("a", a.begin(), a.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
 
@@ -81,15 +78,14 @@ int test_avx512_float_set_scalar() {
 		print_sequence("a", a.begin(), a.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
 
 int test_avx512_float_broadcast() {
 	std::vector<float> a(16);
 	std::vector<float> soln(16, 5.5);
-	float s{ 5.5 };
+	float s {5.5};
 
 	auto va = avxhole::simd::avx512_broadcast(&s);
 
@@ -102,8 +98,7 @@ int test_avx512_float_broadcast() {
 		print_sequence("a", a.begin(), a.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
 
@@ -123,8 +118,7 @@ int test_avx512_float_load() {
 		print_sequence("b", b.begin(), b.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
 
@@ -148,8 +142,7 @@ int test_avx512_float_add() {
 		print_sequence("c", c.begin(), c.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
 
@@ -173,8 +166,7 @@ int test_avx512_float_sub() {
 		print_sequence("c", c.begin(), c.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
 
@@ -198,8 +190,7 @@ int test_avx512_float_mul() {
 		print_sequence("c", c.begin(), c.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
 
@@ -223,8 +214,7 @@ int test_avx512_float_div() {
 		print_sequence("c", c.begin(), c.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
 
@@ -250,15 +240,14 @@ int test_avx512_float_fma() {
 		print_sequence("d", d.begin(), d.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
 
 int test_avx512_float_reduce() {
-	std::vector<float> a{ 1.1, 4.9, 2.3, 3.5, 5.7, 2.8, 0.6, 8.0,
-		6.2, 2.5, 4.3, 0.7, 4.8, 3.0, 1.8, 2.1 };
-	float soln{ 54.3 };
+	std::vector<float> a {1.1, 4.9, 2.3, 3.5, 5.7, 2.8, 0.6, 8.0,
+						  6.2, 2.5, 4.3, 0.7, 4.8, 3.0, 1.8, 2.1};
+	float soln {54.3};
 
 	auto va = avxhole::simd::avx512_load(a.data());
 
@@ -266,10 +255,8 @@ int test_avx512_float_reduce() {
 
 	if (r != soln) {
 		std::cout << "\nERROR! test_avx512_float_reduce()"
-				  << "\nr    = " << r
-				  << "\nsoln = " << soln << std::endl;
+				  << "\nr    = " << r << "\nsoln = " << soln << std::endl;
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }

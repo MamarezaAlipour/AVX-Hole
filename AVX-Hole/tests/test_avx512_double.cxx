@@ -1,16 +1,16 @@
 // Copyright (c) 2022 Parisa Khaleghi
 // All rights reserved
 
+#include "test_avx512_double.hxx"
+#include "test_helpers.hxx"
+#include <avxhole/simd.hxx>
 #include <iostream>
 #include <vector>
-#include <avxhole/simd.hxx>
-#include "test_helpers.hxx"
-#include "test_avx512_double.hxx"
 
 int test_avx512_double() {
 	std::cout << "\ntest_avx512_double()" << std::endl;
 
-	int fail{ 0 };
+	int fail {0};
 
 	fail += test_avx512_double_width();
 	fail += test_avx512_double_set_zero_and_store();
@@ -32,21 +32,17 @@ int test_avx512_double() {
 	return fail;
 }
 
-
 int test_avx512_double_width() {
 	constexpr std::int32_t r = avxhole::simd::avx512_width<std::int32_t, double>();
-	std::int32_t soln{ 8 };
+	std::int32_t soln {8};
 
 	if (r != soln) {
 		std::cout << "\nERROR! test_avx512_double_width()"
-				  << "\nr    = " << r
-				  << "\nsoln = " << soln << std::endl;
+				  << "\nr    = " << r << "\nsoln = " << soln << std::endl;
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
-
 
 int test_avx512_double_set_zero_and_store() {
 	std::vector<double> a(8);
@@ -63,11 +59,9 @@ int test_avx512_double_set_zero_and_store() {
 		print_sequence("a", a.begin(), a.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
-
 
 int test_avx512_double_set_scalar() {
 	std::vector<double> a(8);
@@ -84,16 +78,14 @@ int test_avx512_double_set_scalar() {
 		print_sequence("a", a.begin(), a.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
-
 
 int test_avx512_double_broadcast() {
 	std::vector<double> a(8);
 	std::vector<double> soln(8, 5.5);
-	double s{ 5.5 };
+	double s {5.5};
 
 	auto va = avxhole::simd::avx512_broadcast(&s);
 
@@ -106,11 +98,9 @@ int test_avx512_double_broadcast() {
 		print_sequence("a", a.begin(), a.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
-
 
 int test_avx512_double_load() {
 	std::vector<double> a(8, 5.5);
@@ -128,11 +118,9 @@ int test_avx512_double_load() {
 		print_sequence("b", b.begin(), b.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
-
 
 int test_avx512_double_add() {
 	std::vector<double> a(8, 5.5);
@@ -154,11 +142,9 @@ int test_avx512_double_add() {
 		print_sequence("c", c.begin(), c.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
-
 
 int test_avx512_double_sub() {
 	std::vector<double> a(8, 5.5);
@@ -180,11 +166,9 @@ int test_avx512_double_sub() {
 		print_sequence("c", c.begin(), c.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
-
 
 int test_avx512_double_mul() {
 	std::vector<double> a(8, 5.5);
@@ -206,11 +190,9 @@ int test_avx512_double_mul() {
 		print_sequence("c", c.begin(), c.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
-
 
 int test_avx512_double_div() {
 	std::vector<double> a(8, 5.5);
@@ -232,11 +214,9 @@ int test_avx512_double_div() {
 		print_sequence("c", c.begin(), c.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
-
 
 int test_avx512_double_fma() {
 	std::vector<double> a(8, 5.5);
@@ -260,15 +240,13 @@ int test_avx512_double_fma() {
 		print_sequence("d", d.begin(), d.end());
 		print_sequence("soln", soln.begin(), soln.end());
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }
 
-
 int test_avx512_double_reduce() {
-	std::vector<double> a{ 1.1, 4.9, 2.3, 3.5, 5.7, 2.8, 0.6, 8.0 };
-	double soln{ 28.9 };
+	std::vector<double> a {1.1, 4.9, 2.3, 3.5, 5.7, 2.8, 0.6, 8.0};
+	double soln {28.9};
 
 	auto va = avxhole::simd::avx512_load(a.data());
 
@@ -276,10 +254,8 @@ int test_avx512_double_reduce() {
 
 	if (r != soln) {
 		std::cout << "\nERROR! test_avx512_double_reduce()"
-				  << "\nr    = " << r
-				  << "\nsoln = " << soln << std::endl;
+				  << "\nr    = " << r << "\nsoln = " << soln << std::endl;
 		return 1;
-	}
-	else
+	} else
 		return 0;
 }

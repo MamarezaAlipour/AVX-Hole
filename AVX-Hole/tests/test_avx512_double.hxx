@@ -4,7 +4,6 @@
 #ifndef AVXHOLE_SIMD_TEST_AVX512_DOUBLE_HXX
 #define AVXHOLE_SIMD_TEST_AVX512_DOUBLE_HXX
 
-
 int test_avx512_double();
 
 int test_avx512_double_width();
@@ -19,6 +18,5 @@ int test_avx512_double_mul();
 int test_avx512_double_div();
 int test_avx512_double_fma();
 int test_avx512_double_reduce();
-
 
 #endif
