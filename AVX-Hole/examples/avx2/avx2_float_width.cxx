@@ -1,3 +1,6 @@
+// Copyright (c) 2022 Parisa Khaleghi
+// All rights reserved
+
 #include <avxhole/simd.hxx>
 #include <iostream>
 
