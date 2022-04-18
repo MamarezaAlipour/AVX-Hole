@@ -22,7 +22,7 @@ CompactNamespaces: 'false'
 ConstructorInitializerAllOnOneLineOrOnePerLine: 'false'
 ConstructorInitializerIndentWidth: '4'
 ContinuationIndentWidth: '4'
-ColumnLimit: 100
+ColumnLimit: 120
 Cpp11BracedListStyle: 'true'
 DerivePointerAlignment: 'false'
 DisableFormat: 'false'
