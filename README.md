@@ -12,4 +12,4 @@ Use for a subset of the AVX2 and AVX-512 x86 SIMD instruction sets.
 **It will be continuously developed.** \
 **Please only use it for development purposes and no more.**
 
-Documents and descriptions will be released soon.
+Documents and descriptions: soon.
