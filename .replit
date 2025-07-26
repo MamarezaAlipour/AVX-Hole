@@ -1,4 +1,5 @@
 modules = ["cpp-clang14"]
+run = "cd AVX-Hole && make clean && make examples"
 
 [nix]
 channel = "stable-25_05"
@@ -39,3 +40,6 @@ args = "echo \"Build completed. Running AVX2 float addition example:\""
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "./build/avx2/avx2_float_add"
+
+[deployment]
+run = ["sh", "-c", "cd AVX-Hole && make clean && make examples"]
