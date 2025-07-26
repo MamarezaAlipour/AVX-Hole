@@ -75,29 +75,117 @@ namespace avxhole {
         
         // Constructors
         simd_vector() = default;
-        explicit simd_vector(T scalar);
-        explicit simd_vector(const T* data);
+        
+        explicit simd_vector(T scalar) {
+            if constexpr (std::is_same_v<T, float> && Width == 8) {
+                data_ = internal::avx2_float::set_scalar(scalar);
+            } else if constexpr (std::is_same_v<T, double> && Width == 4) {
+                data_ = internal::avx2_double::set_scalar(scalar);
+            }
+#ifdef __AVX512F__
+            else if constexpr (std::is_same_v<T, float> && Width == 16) {
+                data_ = internal::avx512_float::set_scalar(scalar);
+            } else if constexpr (std::is_same_v<T, double> && Width == 8) {
+                data_ = internal::avx512_double::set_scalar(scalar);
+            }
+#endif
+        }
+        
+        explicit simd_vector(const T* data) {
+            load(data);
+        }
+        
+        explicit simd_vector(typename internal::simd_traits<T, Width>::register_type reg) : data_(reg) {}
         
         // Basic operations
-        simd_vector operator+(const simd_vector& other) const;
-        simd_vector operator-(const simd_vector& other) const;
-        simd_vector operator*(const simd_vector& other) const;
-        simd_vector operator/(const simd_vector& other) const;
+        simd_vector operator+(const simd_vector& other) const {
+            if constexpr (std::is_same_v<T, float> && Width == 8) {
+                return simd_vector(internal::avx2_float::add(data_, other.data_));
+            } else if constexpr (std::is_same_v<T, double> && Width == 4) {
+                return simd_vector(internal::avx2_double::add(data_, other.data_));
+            }
+        }
+        
+        simd_vector operator-(const simd_vector& other) const {
+            if constexpr (std::is_same_v<T, float> && Width == 8) {
+                return simd_vector(internal::avx2_float::sub(data_, other.data_));
+            } else if constexpr (std::is_same_v<T, double> && Width == 4) {
+                return simd_vector(internal::avx2_double::sub(data_, other.data_));
+            }
+        }
+        
+        simd_vector operator*(const simd_vector& other) const {
+            if constexpr (std::is_same_v<T, float> && Width == 8) {
+                return simd_vector(internal::avx2_float::mul(data_, other.data_));
+            } else if constexpr (std::is_same_v<T, double> && Width == 4) {
+                return simd_vector(internal::avx2_double::mul(data_, other.data_));
+            }
+        }
+        
+        simd_vector operator/(const simd_vector& other) const {
+            if constexpr (std::is_same_v<T, float> && Width == 8) {
+                return simd_vector(internal::avx2_float::div(data_, other.data_));
+            } else if constexpr (std::is_same_v<T, double> && Width == 4) {
+                return simd_vector(internal::avx2_double::div(data_, other.data_));
+            }
+        }
         
         // FMA operations
-        simd_vector fma(const simd_vector& b, const simd_vector& c) const;
+        simd_vector fma(const simd_vector& b, const simd_vector& c) const {
+            if constexpr (std::is_same_v<T, float> && Width == 8) {
+                return simd_vector(internal::avx2_float::fma(data_, b.data_, c.data_));
+            } else if constexpr (std::is_same_v<T, double> && Width == 4) {
+                return simd_vector(internal::avx2_double::fma(data_, b.data_, c.data_));
+            }
+        }
         
         // Load/Store operations
-        void load(const T* data);
-        void store(T* data) const;
+        void load(const T* data) {
+            if constexpr (std::is_same_v<T, float> && Width == 8) {
+                data_ = internal::avx2_float::load(data);
+            } else if constexpr (std::is_same_v<T, double> && Width == 4) {
+                data_ = internal::avx2_double::load(data);
+            }
+        }
+        
+        void store(T* data) const {
+            if constexpr (std::is_same_v<T, float> && Width == 8) {
+                internal::avx2_float::store(data, data_);
+            } else if constexpr (std::is_same_v<T, double> && Width == 4) {
+                internal::avx2_double::store(data, data_);
+            }
+        }
         
         // Reduction operations
-        T reduce_add() const;
-        T reduce_mul() const;
+        T reduce_add() const {
+            if constexpr (std::is_same_v<T, float> && Width == 8) {
+                return internal::avx2_float::reduce_add(data_);
+            } else if constexpr (std::is_same_v<T, double> && Width == 4) {
+                return internal::avx2_double::reduce_add(data_);
+            }
+        }
+        
+        T reduce_mul() const {
+            // Implementation for reduce_mul would go here
+            return T{};
+        }
         
         // Broadcast operations
-        static simd_vector broadcast(T value);
-        static simd_vector zero();
+        static simd_vector broadcast(T value) {
+            if constexpr (std::is_same_v<T, float> && Width == 8) {
+                return simd_vector(internal::avx2_float::broadcast(value));
+            } else if constexpr (std::is_same_v<T, double> && Width == 4) {
+                return simd_vector(internal::avx2_double::broadcast(value));
+            }
+        }
+        
+        static simd_vector zero() {
+            if constexpr (std::is_same_v<T, float> && Width == 8) {
+                return simd_vector(internal::avx2_float::set_zero());
+            } else if constexpr (std::is_same_v<T, double> && Width == 4) {
+                return simd_vector(internal::avx2_double::set_zero());
+            }
+        }
         
     private:
         typename internal::simd_traits<T, Width>::register_type data_;
