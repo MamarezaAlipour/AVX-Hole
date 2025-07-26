@@ -16,7 +16,7 @@ int main() {
 	double s = 5.5;
 
 	// Broadcast scalar value to each element of SIMD object
-	auto va = avxhole::simd::avx512_broadcast(&s);
+	auto va = avxhole::avx512_double::broadcast(s);
 
 	// Transfer data from SIMD object to container
 	avxhole::simd::avx512_store(a.data(), va);
