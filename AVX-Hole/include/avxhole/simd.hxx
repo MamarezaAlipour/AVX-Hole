@@ -73,6 +73,54 @@ namespace avxhole {
         inline __m256d avx2_fma(const __m256d& a, const __m256d& b, const __m256d& c) {
             return _mm256_fmadd_pd(a, b, c);
         }
+        
+        // AVX2 reduce functions
+        inline float avx2_reduce(const __m256& vec) {
+            __m128 low = _mm256_castps256_ps128(vec);
+            __m128 high = _mm256_extractf128_ps(vec, 1);
+            __m128 sum = _mm_add_ps(low, high);
+            __m128 shuf = _mm_movehdup_ps(sum);
+            sum = _mm_add_ps(sum, shuf);
+            shuf = _mm_movehl_ps(shuf, sum);
+            sum = _mm_add_ss(sum, shuf);
+            return _mm_cvtss_f32(sum);
+        }
+        
+        inline double avx2_reduce(const __m256d& vec) {
+            __m128d low = _mm256_castpd256_pd128(vec);
+            __m128d high = _mm256_extractf128_pd(vec, 1);
+            __m128d sum = _mm_add_pd(low, high);
+            __m128d shuf = _mm_unpackhi_pd(sum, sum);
+            sum = _mm_add_sd(sum, shuf);
+            return _mm_cvtsd_f64(sum);
+        }
+        
+        // AVX512 reduce functions
+        inline float avx512_reduce(const __m512& vec) {
+            return _mm512_reduce_add_ps(vec);
+        }
+        
+        inline double avx512_reduce(const __m512d& vec) {
+            return _mm512_reduce_add_pd(vec);
+        }
+        
+        // AVX512 load functions
+        inline __m512 avx512_load(const float* data) {
+            return _mm512_loadu_ps(data);
+        }
+        
+        inline __m512d avx512_load(const double* data) {
+            return _mm512_loadu_pd(data);
+        }
+        
+        // AVX512 store functions
+        inline void avx512_store(float* data, __m512 vec) {
+            _mm512_storeu_ps(data, vec);
+        }
+        
+        inline void avx512_store(double* data, __m512d vec) {
+            _mm512_storeu_pd(data, vec);
+        }
     }
     
     // Main SIMD vector wrapper
