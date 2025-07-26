@@ -1,7 +1,7 @@
 
 # AVX-Hole
 
-[![MIT license](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/PariKhaleghi/AVX-Hole/blob/master/LICENSE)
+[![MIT license](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/MamarezaAlipour/AVX-Hole/blob/master/LICENSE)
 [![Standard](https://img.shields.io/badge/C%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization)
 [![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
 
@@ -31,7 +31,7 @@ This is a header-only library. Simply copy the `include/avxhole` directory to yo
 
 ```bash
 # Clone the repository
-git clone https://github.com/PariKhaleghi/AVX-Hole.git
+git clone https://github.com/MamarezaAlipour/AVX-Hole.git
 
 # Copy headers to your project
 cp -r AVX-Hole/include/avxhole /path/to/your/project/include/
