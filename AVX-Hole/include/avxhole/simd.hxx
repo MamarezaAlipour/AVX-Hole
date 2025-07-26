@@ -64,6 +64,15 @@ namespace avxhole {
         inline __m256d avx2_div(const __m256d& a, const __m256d& b) {
             return _mm256_div_pd(a, b);
         }
+        
+        // AVX2 FMA functions
+        inline __m256 avx2_fma(const __m256& a, const __m256& b, const __m256& c) {
+            return _mm256_fmadd_ps(a, b, c);
+        }
+        
+        inline __m256d avx2_fma(const __m256d& a, const __m256d& b, const __m256d& c) {
+            return _mm256_fmadd_pd(a, b, c);
+        }
     }
     
     // Main SIMD vector wrapper

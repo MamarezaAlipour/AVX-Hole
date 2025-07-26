@@ -26,7 +26,7 @@ int main() {
 	auto vc = avxhole::simd::avx512_load(c.data());
 
 	// Compute SIMD operation d = (a * b) + c
-	auto vd = avxhole::simd::avx512_fma(va, vb, vc);
+	auto vd = _mm512_fmadd_ps(va, vb, vc);
 
 	// Transfer data from SIMD object to container
 	avxhole::simd::avx512_store(d.data(), vd);

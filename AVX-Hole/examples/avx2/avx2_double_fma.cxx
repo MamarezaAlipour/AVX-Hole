@@ -23,7 +23,7 @@ int main() {
 	auto vc = avxhole::simd::avx2_load(c.data());
 
 	// Compute SIMD operation d = (a * b) + c
-	auto vd = avxhole::simd::avx2_fma(va, vb, vc);
+	auto vd = _mm256_fmadd_pd(va, vb, vc);
 
 	// Transfer data from SIMD object to container
 	avxhole::simd::avx2_store(d.data(), vd);
