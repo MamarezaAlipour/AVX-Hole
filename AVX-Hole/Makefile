@@ -1,8 +1,7 @@
-
 CXX = g++
 CXXFLAGS = -std=c++20 -O3 -march=native -Wall -Wextra -Iinclude
-AVXFLAGS = -mavx2 -mfma
-AVX512FLAGS = -mavx512f -mavx512dq
+AVX2_FLAGS = -mavx2 -mfma
+AVX512_FLAGS = -mavx512f -mavx512dq -mavx512bw -mavx512vl
 
 # Directories
 SRCDIR = examples
@@ -38,22 +37,22 @@ benchmark: $(BENCH_TARGETS)
 # Build AVX2 examples
 $(BUILDDIR)/avx2/%: $(SRCDIR)/avx2/%.cxx
 	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(AVXFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) $(AVX2_FLAGS) $< -o $@
 
 # Build AVX-512 examples
 $(BUILDDIR)/avx512/%: $(SRCDIR)/avx512/%.cxx
 	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(AVX512FLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) $(AVX512_FLAGS) $< -o $@
 
 # Build statistical examples
 $(BUILDDIR)/stat-simd-impl/%: $(SRCDIR)/stat-simd-impl/%.cxx
 	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(AVXFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) $(AVX2_FLAGS) $< -o $@
 
 # Build benchmark examples
 $(BUILDDIR)/benchmark/%: $(SRCDIR)/benchmark/%.cxx
 	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(AVX512FLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) $(AVX512_FLAGS) $< -o $@
 
 # Build tests
 test:

@@ -1,12 +1,11 @@
 #pragma once
 
-#include "concepts.hxx"
-#include "traits.hxx"
+#ifdef __AVX512F__
 #include <immintrin.h>
 
-namespace avxhole::internal {
+namespace avxhole {
+namespace internal {
 
-    // AVX-512 Float operations
     namespace avx512_float {
 
         inline __m512 set_zero() {
@@ -104,4 +103,7 @@ namespace avxhole::internal {
 
     } // namespace avx512_double
 
-} // namespace avxhole::internal
+} // namespace internal
+} // namespace avxhole
+
+#endif // __AVX512F__
