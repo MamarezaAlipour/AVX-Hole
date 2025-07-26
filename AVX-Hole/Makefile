@@ -8,9 +8,9 @@ SRCDIR = examples
 BUILDDIR = build
 TESTDIR = tests
 
-# Find all .cxx files in examples
-AVX2_SOURCES = $(wildcard $(SRCDIR)/avx2/*.cxx)
-AVX512_SOURCES = $(wildcard $(SRCDIR)/avx512/*.cxx)
+# Find all .cxx files in examples (excluding files with leading spaces)
+AVX2_SOURCES = $(filter-out $(SRCDIR)/avx2/ %,$(wildcard $(SRCDIR)/avx2/*.cxx))
+AVX512_SOURCES = $(filter-out $(SRCDIR)/avx512/ %,$(wildcard $(SRCDIR)/avx512/*.cxx))
 STAT_SOURCES = $(wildcard $(SRCDIR)/stat-simd-impl/*.cxx)
 BENCH_SOURCES = $(wildcard $(SRCDIR)/benchmark/*.cxx)
 
