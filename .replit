@@ -2,3 +2,40 @@ modules = ["cpp-clang14"]
 
 [nix]
 channel = "stable-25_05"
+
+[workflows]
+runButton = "Build and Run Examples"
+
+[[workflows.workflow]]
+name = "Build and Run Examples"
+author = 44904168
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd AVX-Hole && make examples"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "echo \"Build completed. Running AVX2 float addition example:\""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "./build/avx2/avx2_float_add"
+
+[[workflows.workflow]]
+name = "Build and Run Examples"
+author = 44904168
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd AVX-Hole && make examples"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "echo \"Build completed. Running AVX2 float addition example:\""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "./build/avx2/avx2_float_add"

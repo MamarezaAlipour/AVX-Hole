@@ -1,58 +1,71 @@
-// Copyright (c) 2022 Parisa Khaleghi
-// All rights reserved
 
-#ifndef AVXHOLE_TRAITS_HXX
-#define AVXHOLE_TRAITS_HXX
+#pragma once
 
+#include "concepts.hxx"
+#include <immintrin.h>
 #include <type_traits>
 
-namespace avxhole {
-	template <class T>
-	struct is_integer;
-	template <class T>
-	struct is_real;
-
-	template <class T>
-	constexpr bool is_integer_v = avxhole::is_integer<T>::value;
-
-	template <class T>
-	constexpr bool is_real_v = avxhole::is_real<T>::value;
-
-	namespace detail {
-		template <class T>
-		struct is_integer_impl : public std::false_type {};
-		template <>
-		struct is_integer_impl<short> : public std::true_type {};
-		template <>
-		struct is_integer_impl<unsigned short> : public std::true_type {};
-		template <>
-		struct is_integer_impl<int> : public std::true_type {};
-		template <>
-		struct is_integer_impl<unsigned int> : public std::true_type {};
-		template <>
-		struct is_integer_impl<long> : public std::true_type {};
-		template <>
-		struct is_integer_impl<unsigned long> : public std::true_type {};
-		template <>
-		struct is_integer_impl<long long> : public std::true_type {};
-		template <>
-		struct is_integer_impl<unsigned long long> : public std::true_type {};
-	} // namespace detail
-
-	template <class T>
-	struct is_integer : public detail::is_integer_impl<std::remove_cvref_t<T>> {};
-
-	namespace detail {
-		template <class T>
-		struct is_real_impl : public std::false_type {};
-		template <>
-		struct is_real_impl<float> : public std::true_type {};
-		template <>
-		struct is_real_impl<double> : public std::true_type {};
-	} // namespace detail
-
-	template <class T>
-	struct is_real : public detail::is_real_impl<std::remove_cvref_t<T>> {};
-} // namespace avxhole
-
-#endif // !AVXHOLE_TRAITS_HXX
+namespace avxhole::internal {
+    
+    // Primary template for SIMD traits
+    template<typename T, std::size_t Width>
+    struct simd_traits;
+    
+    // Specialization for AVX2 float
+    template<>
+    struct simd_traits<float, 8> {
+        using register_type = __m256;
+        using value_type = float;
+        static constexpr std::size_t width = 8;
+        static constexpr std::size_t alignment = 32;
+        static constexpr bool is_avx2 = true;
+        static constexpr bool is_avx512 = false;
+    };
+    
+    // Specialization for AVX2 double
+    template<>
+    struct simd_traits<double, 4> {
+        using register_type = __m256d;
+        using value_type = double;
+        static constexpr std::size_t width = 4;
+        static constexpr std::size_t alignment = 32;
+        static constexpr bool is_avx2 = true;
+        static constexpr bool is_avx512 = false;
+    };
+    
+    // Specialization for AVX-512 float
+    template<>
+    struct simd_traits<float, 16> {
+        using register_type = __m512;
+        using value_type = float;
+        static constexpr std::size_t width = 16;
+        static constexpr std::size_t alignment = 64;
+        static constexpr bool is_avx2 = false;
+        static constexpr bool is_avx512 = true;
+    };
+    
+    // Specialization for AVX-512 double
+    template<>
+    struct simd_traits<double, 8> {
+        using register_type = __m512d;
+        using value_type = double;
+        static constexpr std::size_t width = 8;
+        static constexpr std::size_t alignment = 64;
+        static constexpr bool is_avx2 = false;
+        static constexpr bool is_avx512 = true;
+    };
+    
+    // Helper type aliases
+    template<typename T, std::size_t Width>
+    using register_type_t = typename simd_traits<T, Width>::register_type;
+    
+    template<typename T, std::size_t Width>
+    constexpr std::size_t alignment_v = simd_traits<T, Width>::alignment;
+    
+    template<typename T, std::size_t Width>
+    constexpr bool is_avx2_v = simd_traits<T, Width>::is_avx2;
+    
+    template<typename T, std::size_t Width>
+    constexpr bool is_avx512_v = simd_traits<T, Width>::is_avx512;
+    
+} // namespace avxhole::internal

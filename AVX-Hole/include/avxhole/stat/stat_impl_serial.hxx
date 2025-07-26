@@ -183,3 +183,48 @@ namespace avxhole {
 } // namespace avxhole
 
 #endif
+#pragma once
+
+#include <span>
+#include <numeric>
+#include <cmath>
+
+namespace avxhole::stat::impl::serial {
+    
+    template<typename T>
+    T arithmetic_mean(std::span<const T> data) {
+        if (data.empty()) return T{0};
+        return std::accumulate(data.begin(), data.end(), T{0}) / static_cast<T>(data.size());
+    }
+    
+    template<typename T>
+    T variance(std::span<const T> data) {
+        if (data.size() < 2) return T{0};
+        
+        T mean = arithmetic_mean(data);
+        T sum_sq_diff = T{0};
+        
+        for (const auto& value : data) {
+            T diff = value - mean;
+            sum_sq_diff += diff * diff;
+        }
+        
+        return sum_sq_diff / static_cast<T>(data.size() - 1);
+    }
+    
+    template<typename T>
+    T covariance(std::span<const T> x, std::span<const T> y) {
+        if (x.size() != y.size() || x.size() < 2) return T{0};
+        
+        T mean_x = arithmetic_mean(x);
+        T mean_y = arithmetic_mean(y);
+        T sum = T{0};
+        
+        for (std::size_t i = 0; i < x.size(); ++i) {
+            sum += (x[i] - mean_x) * (y[i] - mean_y);
+        }
+        
+        return sum / static_cast<T>(x.size() - 1);
+    }
+    
+} // namespace avxhole::stat::impl::serial
