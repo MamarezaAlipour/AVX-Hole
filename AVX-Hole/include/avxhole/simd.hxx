@@ -95,6 +95,7 @@ namespace avxhole {
             return _mm_cvtsd_f64(sum);
         }
         
+        #ifdef __AVX512F__
         // AVX512 reduce functions
         inline float avx512_reduce(const __m512& vec) {
             return _mm512_reduce_add_ps(vec);
@@ -121,6 +122,49 @@ namespace avxhole {
         inline void avx512_store(double* data, __m512d vec) {
             _mm512_storeu_pd(data, vec);
         }
+        
+        // AVX512 arithmetic functions
+        inline __m512 avx512_add(const __m512& a, const __m512& b) {
+            return _mm512_add_ps(a, b);
+        }
+        
+        inline __m512d avx512_add(const __m512d& a, const __m512d& b) {
+            return _mm512_add_pd(a, b);
+        }
+        
+        inline __m512 avx512_sub(const __m512& a, const __m512& b) {
+            return _mm512_sub_ps(a, b);
+        }
+        
+        inline __m512d avx512_sub(const __m512d& a, const __m512d& b) {
+            return _mm512_sub_pd(a, b);
+        }
+        
+        inline __m512 avx512_mul(const __m512& a, const __m512& b) {
+            return _mm512_mul_ps(a, b);
+        }
+        
+        inline __m512d avx512_mul(const __m512d& a, const __m512d& b) {
+            return _mm512_mul_pd(a, b);
+        }
+        
+        inline __m512 avx512_div(const __m512& a, const __m512& b) {
+            return _mm512_div_ps(a, b);
+        }
+        
+        inline __m512d avx512_div(const __m512d& a, const __m512d& b) {
+            return _mm512_div_pd(a, b);
+        }
+        
+        // AVX512 FMA functions
+        inline __m512 avx512_fma(const __m512& a, const __m512& b, const __m512& c) {
+            return _mm512_fmadd_ps(a, b, c);
+        }
+        
+        inline __m512d avx512_fma(const __m512d& a, const __m512d& b, const __m512d& c) {
+            return _mm512_fmadd_pd(a, b, c);
+        }
+#endif
     }
     
     // Main SIMD vector wrapper
